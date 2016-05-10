@@ -4,7 +4,7 @@ public class Ejecutable extends PApplet {
 	private Logica log;
 
 	public void setup() {
-		size(1200, 700);
+		size(1225, 793);
 		log = new Logica(this);
 	}
 
@@ -16,6 +16,11 @@ public class Ejecutable extends PApplet {
 
 	public void keyPressed() {
 		log.teclas(keyCode);
+	}
+
+	public void mousePressed() {
+		System.out.println(mouseX + "y" + mouseY);
+		log.mouse(mouseX, mouseY);
 	}
 
 }
