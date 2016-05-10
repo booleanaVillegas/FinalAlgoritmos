@@ -20,7 +20,7 @@ public class Personaje implements Runnable {
 	public boolean interacutar(){
 		return true;
 		}
-	@Override
+	
 	public void run() {
 	
 		
