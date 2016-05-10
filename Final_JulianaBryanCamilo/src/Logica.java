@@ -7,11 +7,11 @@ public class Logica {
 	private PApplet app;
 	private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
 	private ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
-	private PImage[] imgs = new PImage[52]; 
+	private PImage[] imgs = new PImage[58]; 
 	
 	private PImage[] choices = new PImage[6];								
 	private Ppal jugador;
-	private int pantalla;
+	private int pantalla=2;
 	private int variable;
 
 	public Logica(PApplet app) {
@@ -20,37 +20,37 @@ public class Logica {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
 		}
 		for (int i = 0; i < 6; i++) {
-			choices[i]=imgs[i+8];
+			choices[i]=imgs[i+6];
 		}
 		
-		jugador= new Ppal(app, 500, 300);
+		jugador= new Ppal(app, 450, 320);
 	}
 
 	public void juego() {
 		switch (pantalla) {
 		case 0: // incio
 			// img
-			app.image(imgs[3], 0, 0);
+			app.image(imgs[57], 0, 0);
 			// botones
 			break;
 		case 1: // instrucciones
 			// img
-			app.image(imgs[6], 0, 0);
+			app.image(imgs[3], 0, 0);
 			// botones
 			break;
 		case 2: // historias
-			app.image(imgs[4], 0, 0);
+			app.image(imgs[2], 0, 0);
 			//app.image(choices[5], 0, 0);
 			jugador.pintar(choices);
 			// closet
 			break;
 		case 3:
 			//sexualidad
-			app.image(imgs[1], 0, 0);
+			app.image(imgs[50], 0, 0);
 			break;
 		case 4:
 			// raza
-			app.image(imgs[2], 0, 0);
+			app.image(imgs[1], 0, 0);
 			break;
 		case 5:
 			//estratps
@@ -118,10 +118,10 @@ public class Logica {
 	public void mouse(int x, int y) {
 		switch (pantalla) {
 		case 0: // incio
-			if (x > 565 && y > 568 && x < 667 && y < 621) {
+			if (x > 493 && y > 497 && x < 587 && y < 541) {
 				pantalla = 2;
 			}
-			if (x > 485 && y > 650 && x < 757 && y < 708) {
+			if (x > 434 && y > 576 && x < 666 && y < 620) {
 				pantalla = 1;
 			}
 			break;
@@ -129,7 +129,7 @@ public class Logica {
 
 			break;
 		case 2: // historias
-			if (x > 493 && y > 704 && x <741 && y < 763) {
+			if (x > 430&& y > 622&& x <665 && y < 673) {
 				pantalla = 3;
 			}
 			break;
