@@ -13,5 +13,9 @@ public class Dialogo extends Thread {
 
 	public void pintar(PImage[] p, int i) {
 		app.image(p[i], x, y);
+	
+	}
+	public void pintarDos(PImage im){
+		app.image(im, x, y);
 	}
 }
