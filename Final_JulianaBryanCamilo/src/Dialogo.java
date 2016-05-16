@@ -1,21 +1,54 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Dialogo extends Thread {
-	int x, y;
-	PApplet app;
-	int i;
+public abstract class Dialogo extends Thread {
+	protected int x, y;
+	protected PApplet app;
+	protected int i;
+	protected PImage[] p;
+	protected int burbuja,c;
 
-	public Dialogo(int x, int y) {
+	public Dialogo(PApplet app,int x, int y, PImage[] p) {
+		this.app=app;
 		this.x = x;
+		this.y = y;
+		this.p = p;
+	}
+
+
+	public abstract void pintar();
+
+	public abstract void animar();
+	public abstract void press(int x, int y);
+ public abstract void hover(int x, int y);
+ 
+	public void run() {
+		while (true) {
+			try {
+				animar();
+				sleep(16);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public void pintar(PImage[] p, int i) {
-		app.image(p[i], x, y);
-	
-	}
-	public void pintarDos(PImage im){
-		app.image(im, x, y);
-	}
 }

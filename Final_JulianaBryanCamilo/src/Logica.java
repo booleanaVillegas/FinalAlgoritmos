@@ -7,12 +7,16 @@ public class Logica {
 	private PApplet app;
 	private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
 	private ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
-	private PImage[] imgs = new PImage[58];
+	private PImage[] imgs = new PImage[21];
 
 	private PImage[] choices = new PImage[6];
+	private PImage[] dialogoSex = new PImage[9];
+	private PImage[] dialogoRace = new PImage[19];
+    private PImage[] dialogoMoney= new PImage[16];
 	private Ppal jugador;
 	private int pantalla;
 	private int variable, one, two, three, malas;
+	private ArrayList<Dialogo> dialogos= new ArrayList<Dialogo>();
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -22,16 +26,30 @@ public class Logica {
 		for (int i = 0; i < 6; i++) {
 			choices[i] = imgs[i + 6];
 		}
-
+		for (int i = 0; i < dialogoSex.length; i++) {
+			dialogoSex[i] = app.loadImage("../data/sexu(" + (i + 1) + ").png");
+		}
+		for (int i = 0; i < dialogoMoney.length; i++) {
+			dialogoMoney[i] = app.loadImage("../data/money(" + (i + 1) + ").png");
+		}
+		for (int i = 0; i < dialogoRace.length; i++) {
+			dialogoRace[i] = app.loadImage("../data/race(" + (i + 1) + ").png");
+		}
 		jugador = new Ppal(app, 450, 320);
+		crearDialogos();
 	}
 
+	public void crearDialogos(){
+		dialogos.add(new DialogoSex(app, 480,287,dialogoSex));
+		dialogos.add(new DialogoRace(app, 222,97,dialogoRace));
+		dialogos.add(new DialogoMoney(app, 565,361,dialogoMoney));
+	}
 	public void juego() {
 
 		switch (pantalla) {
 		case 0: // incio
 			// img
-			app.image(imgs[57], 0, 0);
+			app.image(imgs[20], 0, 0);
 			// botones
 			break;
 		case 1: // instrucciones
@@ -47,15 +65,20 @@ public class Logica {
 			break;
 		case 3:
 			// sexualidad
-			app.image(imgs[50], 0, 0);
+			app.image(imgs[14], 0, 0);
+			dialogos.get(0).pintar();
+			dialogos.get(0).hover(app.mouseX, app.mouseY);
 			break;
 		case 4:
 			// raza
 			app.image(imgs[1], 0, 0);
+			dialogos.get(1).pintar();
+			dialogos.get(1).hover(app.mouseX, app.mouseY);
 			break;
 		case 5:
-			// estratps
+			// estratos
 			app.image(imgs[0], 0, 0);
+			dialogos.get(2).pintar();
 			break;
 		case 6: // preguntsd
 			lvlOne();
@@ -255,7 +278,7 @@ app.text(variable,0,0);
 			app.image(imgs[12], 0, 0);
 			break;
 		case 1:
-			app.image(imgs[52], 0, 0);
+			app.image(imgs[15], 0, 0);
 			break;
 
 		}
@@ -264,10 +287,10 @@ app.text(variable,0,0);
 	private void lvlThree() {
 		switch (three) {
 		case 0:
-			app.image(imgs[53], 0, 0);
+			app.image(imgs[16], 0, 0);
 			break;
 		case 1:
-			app.image(imgs[54], 0, 0);
+			app.image(imgs[16], 0, 0);
 			break;
 
 		}
@@ -292,14 +315,14 @@ app.text(variable,0,0);
 			}
 			break;
 		case 3:
+			dialogos.get(0).press(x,y);
 			;
 			break;
 		case 4:
-			// estratos
-
+			dialogos.get(1).press(x,y);
 			break;
-		case 5: // Evaluaciones
-
+		case 5: 
+			dialogos.get(2).press(x,y);
 			break;
 		case 6:
 
