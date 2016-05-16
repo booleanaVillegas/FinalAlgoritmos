@@ -1,25 +1,39 @@
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import com.leapmotion.leap.Vector;
+import com.leapmotion.leap.processing.LeapMotion;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.video.Capture;
 
 public class Logica {
 	private PApplet app;
+	private Capture cam;
 	private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
 	private ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
 	private PImage[] imgs = new PImage[21];
-
+	private float manoX, manoY;
 	private PImage[] choices = new PImage[6];
+	private PImage camarita;
 	private PImage[] dialogoSex = new PImage[9];
 	private PImage[] dialogoRace = new PImage[19];
-    private PImage[] dialogoMoney= new PImage[16];
+	private PImage[] dialogoMoney = new PImage[16];
 	private Ppal jugador;
 	private int pantalla;
 	private int variable, one, two, three, malas;
-	private ArrayList<Dialogo> dialogos= new ArrayList<Dialogo>();
+	private ArrayList<Dialogo> dialogos = new ArrayList<Dialogo>();
+	private LeapMotion leapMotion;
+	private ConcurrentMap<Integer, Vector> fingerPositions;
 
 	public Logica(PApplet app) {
 		this.app = app;
+		String[] cameras = Capture.list(); /*Se crea un arreglo de strings que contiene la ruta a las cámaras que tenga conectadas el equipo. En éste caso, sólo una*/
+		cam = new Capture(app, cameras[0]); /*Se define cual cámara se utilizará*/
+		cam.start();
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
 		}
@@ -37,15 +51,30 @@ public class Logica {
 		}
 		jugador = new Ppal(app, 450, 320);
 		crearDialogos();
+		leapMotion = new LeapMotion(app);
+		fingerPositions = new ConcurrentHashMap<Integer, Vector>();
+
 	}
 
-	public void crearDialogos(){
-		dialogos.add(new DialogoSex(app, 480,287,dialogoSex));
-		dialogos.add(new DialogoRace(app, 222,97,dialogoRace));
-		dialogos.add(new DialogoMoney(app, 565,361,dialogoMoney));
+	public void crearDialogos() {
+		dialogos.add(new DialogoSex(app, 480, 287, dialogoSex));
+		dialogos.add(new DialogoRace(app, 222, 97, dialogoRace));
+		dialogos.add(new DialogoMoney(app, 565, 361, dialogoMoney));
 	}
+
 	public void juego() {
+		for (Map.Entry entry : fingerPositions.entrySet()) {
+			Vector position = (Vector) entry.getValue();
 
+			// Map de posiciones para que el leap corresponda a las posicones
+			// que se ven dentro del lienzo
+			manoX = app.map(leapMotion.leapToSketchX(position.getX()), 0, 1200, -100, 1300);
+			manoY = app.map(leapMotion.leapToSketchX(position.getY()), 2700, 600, -100, 800);
+		}
+		if (cam.available() == true) {
+			cam.read();
+		}
+		camarita= cam.get();
 		switch (pantalla) {
 		case 0: // incio
 			// img
@@ -79,6 +108,7 @@ public class Logica {
 			// estratos
 			app.image(imgs[0], 0, 0);
 			dialogos.get(2).pintar();
+			dialogos.get(2).hover(app.mouseX, app.mouseY);
 			break;
 		case 6: // preguntsd
 			lvlOne();
@@ -90,9 +120,12 @@ public class Logica {
 			lvlThree();
 			break;
 		case 9:
-app.image(imgs[5], 0, 0);
-app.textSize(30);
-app.text(variable,0,0);
+			app.image(imgs[5], 0, 0);
+			app.textSize(30);
+			app.text(variable, 0, 0);
+			break;
+		case 10: 
+			app.image(camarita, 0, 0);
 			break;
 		}
 
@@ -116,7 +149,7 @@ app.text(variable,0,0);
 		case 3: // historias
 			if (tec == 37) {
 				pantalla = 2;
-				
+
 			}
 			if (tec == 39) {
 				pantalla = 4;
@@ -145,39 +178,39 @@ app.text(variable,0,0);
 					// BIEEEEEN
 					variable++;
 					one = 1;
-					
+
 				}
 				if (tec == 38) {
 					malas++;
 					one = 1;
-					
+
 				}
 				if (tec == 39) {
 					malas++;
 					one = 1;
-					
+
 				}
 			}
-			
-		if (one == 1) {
+
+			if (one == 1) {
 				if (tec == 37) {
 					// BIEEEEEN
 					variable++;
 					pantalla = 7;
-					
+
 				}
 				if (tec == 38) {
 					malas++;
 					pantalla = 7;
-				
+
 				}
 				if (tec == 39) {
 					malas++;
 					pantalla = 7;
-					 
+
+				}
 			}
-			}
-			
+
 			break;
 		case 7:
 			if (two == 0) {
@@ -185,34 +218,34 @@ app.text(variable,0,0);
 					// BIEEEEEN
 					variable++;
 					two = 1;
-					 
+
 				}
 				if (tec == 38) {
 					malas++;
 					two = 1;
-					 
+
 				}
 				if (tec == 39) {
 					malas++;
 					two = 1;
-					 
+
 				}
 			}
 			if (two == 1) {
 				if (tec == 37) {
 					malas++;
 					pantalla = 8;
-					 
-				}    
+
+				}
 				if (tec == 38) {
 					malas++;
 					pantalla = 8;
-					 
-				}    
+
+				}
 				if (tec == 39) {
 					variable++;
 					pantalla = 8;
-					 
+
 				}
 			}
 			break;
@@ -220,18 +253,18 @@ app.text(variable,0,0);
 			if (three == 0) {
 				if (tec == 37) {
 					malas++;
-					three =1;
-					 
+					three = 1;
+
 				}
 				if (tec == 38) {
 					variable++;
-					three =1;
-					 
+					three = 1;
+
 				}
 				if (tec == 39) {
 					malas++;
-					three =1;
-					 
+					three = 1;
+
 				}
 			}
 			if (three == 1) {
@@ -239,17 +272,17 @@ app.text(variable,0,0);
 					// BIEEEEEN
 					variable++;
 					pantalla = 9;
-					 
+
 				}
 				if (tec == 38) {
 					malas++;
-					pantalla =9;
-					 
+					pantalla = 9;
+
 				}
 				if (tec == 39) {
 					malas++;
-					pantalla =9;
-					 
+					pantalla = 9;
+
 				}
 			}
 			break;
@@ -315,14 +348,14 @@ app.text(variable,0,0);
 			}
 			break;
 		case 3:
-			dialogos.get(0).press(x,y);
+			dialogos.get(0).press(x, y);
 			;
 			break;
 		case 4:
-			dialogos.get(1).press(x,y);
+			dialogos.get(1).press(x, y);
 			break;
-		case 5: 
-			dialogos.get(2).press(x,y);
+		case 5:
+			dialogos.get(2).press(x, y);
 			break;
 		case 6:
 
@@ -333,13 +366,13 @@ app.text(variable,0,0);
 		case 8:
 
 			break;
-		
-	case 9:
 
-		break;
-	
+		case 9:
+pantalla=10;
+			break;
+		case 10:
+			break;
+		}
 
 	}
-
-}
 }

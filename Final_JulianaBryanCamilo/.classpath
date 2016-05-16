@@ -5,11 +5,22 @@
 	<classpathentry kind="lib" path="lib/core.jar"/>
 	<classpathentry kind="lib" path="lib/jl1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jsminim.jar"/>
-	<classpathentry kind="lib" path="lib/LeapJava.jar"/>
-	<classpathentry kind="lib" path="lib/LeapMotion.jar"/>
 	<classpathentry kind="lib" path="lib/minim.jar"/>
 	<classpathentry kind="lib" path="lib/mp3spi1.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_aos.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="LeapMotion/library/LeapJava.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Final_JulianaBryanCamilo/LeapMotion/library/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="LeapMotion/library/LeapMotion.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Final_JulianaBryanCamilo/LeapMotion/library/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/video/gstreamer-java.jar"/>
+	<classpathentry kind="lib" path="libs/video/jna.jar"/>
+	<classpathentry kind="lib" path="libs/video/video.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
