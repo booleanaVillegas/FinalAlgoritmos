@@ -31,8 +31,14 @@ public class Logica {
 
 	public Logica(PApplet app) {
 		this.app = app;
-		String[] cameras = Capture.list(); /*Se crea un arreglo de strings que contiene la ruta a las cámaras que tenga conectadas el equipo. En éste caso, sólo una*/
-		cam = new Capture(app, cameras[0]); /*Se define cual cámara se utilizará*/
+		String[] cameras = Capture
+				.list(); /*
+							 * Se crea un arreglo de strings que contiene la
+							 * ruta a las cï¿½maras que tenga conectadas el
+							 * equipo. En ï¿½ste caso, sï¿½lo una
+							 */
+		cam = new Capture(app,
+				cameras[0]); /* Se define cual cï¿½mara se utilizarï¿½ */
 		cam.start();
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
@@ -51,8 +57,8 @@ public class Logica {
 		}
 		jugador = new Ppal(app, 450, 320);
 		crearDialogos();
-		leapMotion = new LeapMotion(app);
-		fingerPositions = new ConcurrentHashMap<Integer, Vector>();
+		// leapMotion = new LeapMotion(app);
+		// fingerPositions = new ConcurrentHashMap<Integer, Vector>();
 
 	}
 
@@ -63,18 +69,20 @@ public class Logica {
 	}
 
 	public void juego() {
-		for (Map.Entry entry : fingerPositions.entrySet()) {
-			Vector position = (Vector) entry.getValue();
-
-			// Map de posiciones para que el leap corresponda a las posicones
-			// que se ven dentro del lienzo
-			manoX = app.map(leapMotion.leapToSketchX(position.getX()), 0, 1200, -100, 1300);
-			manoY = app.map(leapMotion.leapToSketchX(position.getY()), 2700, 600, -100, 800);
-		}
+		/*
+		 * for (Map.Entry entry : fingerPositions.entrySet()) { Vector position
+		 * = (Vector) entry.getValue();
+		 * 
+		 * // Map de posiciones para que el leap corresponda a las posicones //
+		 * que se ven dentro del lienzo manoX =
+		 * app.map(leapMotion.leapToSketchX(position.getX()), 0, 1200, -100,
+		 * 1300); manoY = app.map(leapMotion.leapToSketchX(position.getY()),
+		 * 2700, 600, -100, 800); }
+		 */
 		if (cam.available() == true) {
 			cam.read();
 		}
-		camarita= cam.get();
+		camarita = cam.get();
 		switch (pantalla) {
 		case 0: // incio
 			// img
@@ -124,10 +132,36 @@ public class Logica {
 			app.textSize(30);
 			app.text(variable, 0, 0);
 			break;
-		case 10: 
-			app.image(camarita, 0, 0);
+		case 10:
+			fiesta();
+
 			break;
 		}
+
+	}
+
+	private void fiesta() {
+		camarita.loadPixels();
+		PImage arcoiris = app.createImage(camarita.width, camarita.height, app.RGB);
+		arcoiris.loadPixels();
+		for (int i = 0; i < camarita.width; i++) {
+			for (int j = 0; j < camarita.height; j++) {
+				int matriz = i + (j * camarita.width);
+				camarita.pixels[matriz] = app.color(i / 4, app.saturation(camarita.pixels[matriz]) + 10,
+						app.brightness(camarita.pixels[matriz]));
+				app.colorMode(app.HSB);
+				int h = (int) app.hue(camarita.pixels[matriz]) + (int) (app.random(-50, 50));
+				int s = (int) app.saturation(camarita.pixels[matriz]);
+				int br = (int) app.brightness(camarita.pixels[matriz]);
+				camarita.pixels[matriz] = app.color(h, s, br);
+				app.colorMode(app.RGB);
+				arcoiris.pixels[matriz] = app.color(i/4, app.saturation(camarita.pixels[matriz]) + 10, app.brightness(camarita.pixels[matriz]));
+			}
+		}
+		camarita.updatePixels();
+		arcoiris.updatePixels();
+		app.image(camarita, 0, 0);
+		app.image(arcoiris, 0, 0);
 
 	}
 
@@ -368,7 +402,7 @@ public class Logica {
 			break;
 
 		case 9:
-pantalla=10;
+			pantalla = 10;
 			break;
 		case 10:
 			break;
