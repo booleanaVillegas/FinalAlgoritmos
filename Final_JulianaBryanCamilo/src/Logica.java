@@ -26,19 +26,12 @@ public class Logica {
 	private int pantalla;
 	private int variable, one, two, three, malas;
 	private ArrayList<Dialogo> dialogos = new ArrayList<Dialogo>();
-	private LeapMotion leapMotion;
-	private ConcurrentMap<Integer, Vector> fingerPositions;
+	private ArrayList<Bola> bolitas = new ArrayList<Bola>();
 
 	public Logica(PApplet app) {
 		this.app = app;
-		String[] cameras = Capture
-				.list(); /*
-							 * Se crea un arreglo de strings que contiene la
-							 * ruta a las c�maras que tenga conectadas el
-							 * equipo. En �ste caso, s�lo una
-							 */
-		cam = new Capture(app,
-				cameras[0]); /* Se define cual c�mara se utilizar� */
+		String[] cameras = Capture.list();
+		cam = new Capture(app, cameras[0]);
 		cam.start();
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
@@ -57,9 +50,9 @@ public class Logica {
 		}
 		jugador = new Ppal(app, 450, 320);
 		crearDialogos();
-		// leapMotion = new LeapMotion(app);
-		// fingerPositions = new ConcurrentHashMap<Integer, Vector>();
-
+		for (int i = 0; i < 60; i++) {
+			bolitas.add(new Bola(app));
+		}
 	}
 
 	public void crearDialogos() {
@@ -69,16 +62,7 @@ public class Logica {
 	}
 
 	public void juego() {
-		/*
-		 * for (Map.Entry entry : fingerPositions.entrySet()) { Vector position
-		 * = (Vector) entry.getValue();
-		 * 
-		 * // Map de posiciones para que el leap corresponda a las posicones //
-		 * que se ven dentro del lienzo manoX =
-		 * app.map(leapMotion.leapToSketchX(position.getX()), 0, 1200, -100,
-		 * 1300); manoY = app.map(leapMotion.leapToSketchX(position.getY()),
-		 * 2700, 600, -100, 800); }
-		 */
+
 		if (cam.available() == true) {
 			cam.read();
 		}
@@ -119,21 +103,20 @@ public class Logica {
 			dialogos.get(2).hover(app.mouseX, app.mouseY);
 			break;
 		case 6: // preguntsd
-			lvlOne();
+			preguntas();
 			break;
+
 		case 7:
-			lvlTwo();
-			break;
-		case 8:
-			lvlThree();
-			break;
-		case 9:
 			app.image(imgs[5], 0, 0);
 			app.textSize(30);
-			app.text(variable, 0, 0);
+			app.text(variable, 500, 400);
 			break;
 		case 10:
 			fiesta();
+			
+			for (Bola bola : bolitas) {
+				bola.pintar();
+			}
 
 			break;
 		}
@@ -147,6 +130,9 @@ public class Logica {
 		for (int i = 0; i < camarita.width; i++) {
 			for (int j = 0; j < camarita.height; j++) {
 				int matriz = i + (j * camarita.width);
+				if (app.brightness(camarita.pixels[matriz]) < 50) {
+					camarita.pixels[matriz] = app.color(0, 0, 0);
+				}
 				camarita.pixels[matriz] = app.color(i / 4, app.saturation(camarita.pixels[matriz]) + 10,
 						app.brightness(camarita.pixels[matriz]));
 				app.colorMode(app.HSB);
@@ -155,7 +141,8 @@ public class Logica {
 				int br = (int) app.brightness(camarita.pixels[matriz]);
 				camarita.pixels[matriz] = app.color(h, s, br);
 				app.colorMode(app.RGB);
-				arcoiris.pixels[matriz] = app.color(i/4, app.saturation(camarita.pixels[matriz]) + 10, app.brightness(camarita.pixels[matriz]));
+				arcoiris.pixels[matriz] = app.color(i / 4, app.saturation(camarita.pixels[matriz]) + 10,
+						app.brightness(camarita.pixels[matriz]));
 			}
 		}
 		camarita.updatePixels();
@@ -206,127 +193,126 @@ public class Logica {
 				pantalla = 6;
 			}
 			break;
+
 		case 6: // Evaluaciones
-			if (one == 0) {
+			switch (one) {
+			case 0:
 				if (tec == 37) {
 					// BIEEEEEN
 					variable++;
 					one = 1;
-
+					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					one = 1;
-
+					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					one = 1;
+					app.delay(200);
+				}
+
+				break;
+			case 1:
+				if (tec == 37) {
+					// BIEEEEEN
+					variable++;
+					one = 2;
+					app.delay(200);
+				}
+				if (tec == 38) {
+					malas++;
+					one = 2;
+					app.delay(200);
+				}
+				if (tec == 39) {
+					malas++;
+					one = 2;
+					app.delay(200);
+				}
+				break;
+
+			case 2:
+				if (tec == 37) {
+					// BIEEEEEN
+					variable++;
+					one = 3;
+					app.delay(200);
+				}
+				if (tec == 38) {
+					malas++;
+					one = 3;
+					app.delay(200);
+				}
+				if (tec == 39) {
+					malas++;
+					one = 3;
+					app.delay(200);
+				}
+				break;
+			case 3:
+				if (tec == 37) {
+					malas++;
+					one = 4;
 
 				}
-			}
+				if (tec == 38) {
+					malas++;
+					one = 4;
+					app.delay(200);
+				}
+				if (tec == 39) {
+					variable++;
+					one = 4;
+					app.delay(200);
+				}
 
-			if (one == 1) {
+				break;
+			case 4:
+
+				if (tec == 37) {
+					malas++;
+					one = 5;
+					app.delay(200);
+				}
+				if (tec == 38) {
+					variable++;
+					one = 5;
+					app.delay(200);
+				}
+				if (tec == 39) {
+					malas++;
+					one = 5;
+					app.delay(200);
+				}
+				break;
+			case 5:
 				if (tec == 37) {
 					// BIEEEEEN
 					variable++;
 					pantalla = 7;
-
+					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					pantalla = 7;
-
+					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					pantalla = 7;
-
+					app.delay(200);
 				}
+
+				break;
+
 			}
-
-			break;
-		case 7:
-			if (two == 0) {
-				if (tec == 37) {
-					// BIEEEEEN
-					variable++;
-					two = 1;
-
-				}
-				if (tec == 38) {
-					malas++;
-					two = 1;
-
-				}
-				if (tec == 39) {
-					malas++;
-					two = 1;
-
-				}
-			}
-			if (two == 1) {
-				if (tec == 37) {
-					malas++;
-					pantalla = 8;
-
-				}
-				if (tec == 38) {
-					malas++;
-					pantalla = 8;
-
-				}
-				if (tec == 39) {
-					variable++;
-					pantalla = 8;
-
-				}
-			}
-			break;
-		case 8:
-			if (three == 0) {
-				if (tec == 37) {
-					malas++;
-					three = 1;
-
-				}
-				if (tec == 38) {
-					variable++;
-					three = 1;
-
-				}
-				if (tec == 39) {
-					malas++;
-					three = 1;
-
-				}
-			}
-			if (three == 1) {
-				if (tec == 37) {
-					// BIEEEEEN
-					variable++;
-					pantalla = 9;
-
-				}
-				if (tec == 38) {
-					malas++;
-					pantalla = 9;
-
-				}
-				if (tec == 39) {
-					malas++;
-					pantalla = 9;
-
-				}
-			}
-			break;
-		case 9:
-
-			break;
 		}
 	}
 
-	private void lvlOne() {
+	private void preguntas() {
 
 		switch (one) {
 		case 0:
@@ -335,28 +321,17 @@ public class Logica {
 		case 1:
 			app.image(imgs[13], 0, 0);
 			break;
-
-		}
-	}
-
-	private void lvlTwo() {
-		switch (two) {
-		case 0:
+		case 2:
 			app.image(imgs[12], 0, 0);
 			break;
-		case 1:
+		case 3:
 			app.image(imgs[15], 0, 0);
 			break;
 
-		}
-	}
-
-	private void lvlThree() {
-		switch (three) {
-		case 0:
+		case 4:
 			app.image(imgs[16], 0, 0);
 			break;
-		case 1:
+		case 5:
 			app.image(imgs[16], 0, 0);
 			break;
 
@@ -394,17 +369,12 @@ public class Logica {
 		case 6:
 
 			break;
+
+		
 		case 7:
-
-			break;
-		case 8:
-
-			break;
-
-		case 9:
 			pantalla = 10;
 			break;
-		case 10:
+		case 8:
 			break;
 		}
 
