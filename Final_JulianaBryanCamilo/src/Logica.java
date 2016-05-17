@@ -3,6 +3,7 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.AudioSample;
 import ddf.minim.Minim;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import processing.video.Capture;
 
@@ -14,10 +15,10 @@ public class Logica {
 	private AudioSample bien;
 	private PApplet app;
 	private Capture cam;
-	private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
-	private ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+	private PFont font;
+
 	private PImage[] imgs = new PImage[21];
-	private float manoX, manoY;
+
 	private PImage[] choices = new PImage[6];
 	private PImage camarita;
 	private PImage[] dialogoSex = new PImage[9];
@@ -25,13 +26,13 @@ public class Logica {
 	private PImage[] dialogoMoney = new PImage[16];
 	private Ppal jugador;
 	private int pantalla;
-	private int variable, one, two, three, malas;
+	private int variable, one, malas;
 	private ArrayList<Dialogo> dialogos = new ArrayList<Dialogo>();
 	private ArrayList<Bola> bolitas = new ArrayList<Bola>();
 
 	public Logica(PApplet app) {
 		this.app = app;
-		String[] cameras = Capture.list();
+		font= app.createFont("../data/canter.otf", 50);
 		//cam = new Capture(app, cameras[0]);
 		//cam.start();
 		for (int i = 0; i < imgs.length; i++) {
@@ -78,7 +79,13 @@ public class Logica {
 		switch (pantalla) {
 		case 0: // incio
 			// img
-			app.image(imgs[20], 0, 0);
+			app.image(imgs[20], 0, 0);			
+			if (app.mouseX > 493 && app.mouseY > 497 && app.mouseX  < 587 && app.mouseY < 541) {
+				app.image(imgs[18], 0, 0);
+			}
+			if (app.mouseX  > 434 && app.mouseY > 576 && app.mouseX  < 666 && app.mouseY < 620) {
+				app.image(imgs[19], 0, 0);
+			}
 			// botones
 			break;
 		case 1: // instrucciones
@@ -116,8 +123,8 @@ public class Logica {
 
 		case 7:
 			app.image(imgs[5], 0, 0);
-			app.textSize(30);
-			app.text(variable, 500, 400);
+			app.textFont(font);
+			app.text(variable, 530, 450);
 			break;
 		case 10:
 			//fiesta();
