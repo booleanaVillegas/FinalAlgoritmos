@@ -1,16 +1,17 @@
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
-import com.leapmotion.leap.Vector;
-import com.leapmotion.leap.processing.LeapMotion;
-
+import ddf.minim.AudioPlayer;
+import ddf.minim.AudioSample;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.video.Capture;
 
 public class Logica {
+	private Minim minim;
+	private AudioPlayer fondo;
+	private AudioSample mal;
+	private AudioSample boton;
+	private AudioSample bien;
 	private PApplet app;
 	private Capture cam;
 	private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
@@ -31,8 +32,8 @@ public class Logica {
 	public Logica(PApplet app) {
 		this.app = app;
 		String[] cameras = Capture.list();
-		cam = new Capture(app, cameras[0]);
-		cam.start();
+		//cam = new Capture(app, cameras[0]);
+		//cam.start();
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
 		}
@@ -53,6 +54,13 @@ public class Logica {
 		for (int i = 0; i < 60; i++) {
 			bolitas.add(new Bola(app));
 		}
+		minim = new Minim(app);
+		  fondo = minim.loadFile("../data/fondo.mp3");
+		  mal = minim.loadSample("../data/mal.mp3");
+		  boton = minim.loadSample("../data/boton.mp3");
+		  bien = minim.loadSample("../data/bien.mp3");
+		  
+		  fondo.loop();
 	}
 
 	public void crearDialogos() {
@@ -63,10 +71,10 @@ public class Logica {
 
 	public void juego() {
 
-		if (cam.available() == true) {
+		/*if (cam.available() == true) {
 			cam.read();
 		}
-		camarita = cam.get();
+		camarita = cam.get();*/
 		switch (pantalla) {
 		case 0: // incio
 			// img
@@ -112,7 +120,7 @@ public class Logica {
 			app.text(variable, 500, 400);
 			break;
 		case 10:
-			fiesta();
+			//fiesta();
 			
 			for (Bola bola : bolitas) {
 				bola.pintar();
@@ -166,31 +174,37 @@ public class Logica {
 			break;
 		case 2:
 			jugador.vestir(tec);
+			boton.trigger();
 			break;
 		case 3: // historias
 			if (tec == 37) {
 				pantalla = 2;
-
+				boton.trigger();
 			}
 			if (tec == 39) {
 				pantalla = 4;
+				boton.trigger();
 			}
 			break;
 
 		case 4:
 			if (tec == 37) {
 				pantalla = 3;
+				boton.trigger();
 			}
 			if (tec == 39) {
 				pantalla = 5;
+				boton.trigger();
 			}
 			break;
 		case 5:
 			if (tec == 37) {
 				pantalla = 4;
+				boton.trigger();
 			}
 			if (tec == 39) {
 				pantalla = 6;
+				boton.trigger();
 			}
 			break;
 
@@ -201,16 +215,20 @@ public class Logica {
 					// BIEEEEEN
 					variable++;
 					one = 1;
+					bien.trigger();
 					app.delay(200);
+					
 				}
 				if (tec == 38) {
 					malas++;
 					one = 1;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					one = 1;
+					mal.trigger();
 					app.delay(200);
 				}
 
@@ -220,16 +238,19 @@ public class Logica {
 					// BIEEEEEN
 					variable++;
 					one = 2;
+					bien.trigger();
 					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					one = 2;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					one = 2;
+					mal.trigger();
 					app.delay(200);
 				}
 				break;
@@ -239,16 +260,19 @@ public class Logica {
 					// BIEEEEEN
 					variable++;
 					one = 3;
+					bien.trigger();
 					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					one = 3;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					one = 3;
+					mal.trigger();
 					app.delay(200);
 				}
 				break;
@@ -256,16 +280,19 @@ public class Logica {
 				if (tec == 37) {
 					malas++;
 					one = 4;
-
+					mal.trigger();
+					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					one = 4;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					variable++;
 					one = 4;
+					bien.trigger();
 					app.delay(200);
 				}
 
@@ -275,16 +302,19 @@ public class Logica {
 				if (tec == 37) {
 					malas++;
 					one = 5;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 38) {
 					variable++;
 					one = 5;
+					bien.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					one = 5;
+					mal.trigger();
 					app.delay(200);
 				}
 				break;
@@ -293,16 +323,19 @@ public class Logica {
 					// BIEEEEEN
 					variable++;
 					pantalla = 7;
+					bien.trigger();
 					app.delay(200);
 				}
 				if (tec == 38) {
 					malas++;
 					pantalla = 7;
+					mal.trigger();
 					app.delay(200);
 				}
 				if (tec == 39) {
 					malas++;
 					pantalla = 7;
+					mal.trigger();
 					app.delay(200);
 				}
 
@@ -332,7 +365,7 @@ public class Logica {
 			app.image(imgs[16], 0, 0);
 			break;
 		case 5:
-			app.image(imgs[16], 0, 0);
+			app.image(imgs[17], 0, 0);
 			break;
 
 		}
@@ -343,9 +376,11 @@ public class Logica {
 		case 0: // incio
 			if (x > 493 && y > 497 && x < 587 && y < 541) {
 				pantalla = 2;
+				boton.trigger();
 			}
 			if (x > 434 && y > 576 && x < 666 && y < 620) {
 				pantalla = 1;
+				boton.trigger();
 			}
 			break;
 		case 1: // instrucciones
@@ -354,17 +389,21 @@ public class Logica {
 		case 2: // historias
 			if (x > 430 && y > 622 && x < 665 && y < 673) {
 				pantalla = 3;
+				boton.trigger();
 			}
 			break;
 		case 3:
 			dialogos.get(0).press(x, y);
+			boton.trigger();
 			;
 			break;
 		case 4:
 			dialogos.get(1).press(x, y);
+			boton.trigger();
 			break;
 		case 5:
 			dialogos.get(2).press(x, y);
+			boton.trigger();
 			break;
 		case 6:
 
@@ -373,6 +412,7 @@ public class Logica {
 		
 		case 7:
 			pantalla = 10;
+			boton.trigger();
 			break;
 		case 8:
 			break;
