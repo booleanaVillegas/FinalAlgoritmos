@@ -17,7 +17,7 @@ public class Logica {
 	private Capture cam;
 	private PFont font;
 
-	private PImage[] imgs = new PImage[23];
+	private PImage[] imgs = new PImage[25];
 
 	private PImage[] choices = new PImage[6];
 	private PImage camarita;
@@ -29,6 +29,7 @@ public class Logica {
 	private int variable, one, malas;
 	private ArrayList<Dialogo> dialogos = new ArrayList<Dialogo>();
 	private ArrayList<Bola> bolitas = new ArrayList<Bola>();
+	private int con;
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -136,7 +137,12 @@ public class Logica {
 			for (Bola bola : bolitas) {
 				bola.pintar();
 			}
-
+			con++;
+			if(con%2==0){
+app.image(imgs[23],0,0);
+			} if (con%2==1){
+				app.image(imgs[24],0,0);		
+			}
 			break;
 		}
 
