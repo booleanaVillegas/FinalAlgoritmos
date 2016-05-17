@@ -34,8 +34,8 @@ public class Logica {
 	public Logica(PApplet app) {
 		this.app = app;
 		font= app.createFont("../data/canter.otf", 50);
-		//cam = new Capture(app, cameras[0]);
-		//cam.start();
+		cam = new Capture(app, Capture.list()[0]);
+		cam.start();
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = app.loadImage("../data/img-" + (i + 1) + ".png");
 		}
@@ -73,11 +73,11 @@ public class Logica {
 
 	public void juego() {
 
-		/*if (cam.available() == true) {
+		if (cam.available() == true) {
 			cam.read();
 		}
-		camarita = cam.get();*/
-		app.cursor(imgs[21]);
+		camarita = cam.get();
+		
 		switch (pantalla) {
 		
 		case 0: // incio
@@ -132,7 +132,7 @@ public class Logica {
 			jugador.setXandY(200,350);
 			break;
 		case 10:
-			//fiesta();
+			fiesta();
 			
 			for (Bola bola : bolitas) {
 				bola.pintar();
@@ -145,7 +145,11 @@ app.image(imgs[23],0,0);
 			}
 			break;
 		}
-
+		app.noCursor();
+		app.imageMode(app.CENTER);
+		app.image(imgs[21], app.mouseX,app.mouseY);
+		app.imageMode(app.CORNER);
+		app.noTint();
 	}
 
 	private void fiesta() {

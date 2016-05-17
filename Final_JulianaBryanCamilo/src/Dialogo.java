@@ -6,7 +6,11 @@ public abstract class Dialogo extends Thread {
 	protected PApplet app;
 	protected int i;
 	protected PImage[] p;
-	protected int burbuja, c;
+	protected int burbuja, c,op;
+
+	public int getOp() {
+		return op;
+	}
 
 	public Dialogo(PApplet app, int x, int y, PImage[] p) {
 		this.app = app;

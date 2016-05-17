@@ -42,32 +42,34 @@ public class DialogoSex extends Dialogo {
 		case 0:
 			if (x > 314 && x < 497 && y > 234 && y < 273) {
 				c = 1;
-				app.cursor(img);
+				op=15;
 			} else if (x > 407 && x < 513 && y > 302 && y < 336) {
 				c = 2;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 0;
+				op=255;
 			}
 			break;
 		case 1:
 			if (x > 247 && x < 401 && y > 95 && y < 150) {
 				c = 4;
-				app.cursor(img);
+				op=15;
 			} else if (x > 228 && x < 421 && y > 173 && y < 206) {
 				c = 5;
-				app.cursor(img);
+				op=15;
 			} else if (x > 547 && x < 803 && y > 176 && y < 216) {
 				c = 6;
-				app.cursor(img);
+				op=15;
 			} else if (x > 636 && x < 736 && y > 238 && y < 266) {
 				c = 7;
-				app.cursor(img);
+				op=15;
 			} else if (x > 481 && x < 730 && y > 332 && y < 356) {
 				c = 8;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 3;
+				op=255;
 			}
 			break;
 		}

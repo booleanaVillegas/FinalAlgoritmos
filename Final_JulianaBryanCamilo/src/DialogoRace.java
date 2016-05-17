@@ -64,58 +64,62 @@ public class DialogoRace extends Dialogo {
 		case 0:
 			if (x > 18 && x < 275 && y > 51 && y < 91) {
 				c = 1;
-				app.cursor(img);
+				op=15;
 			} else if (x > 198 && x < 311 && y > 110 && y < 136) {
 				c = 2;
-				app.cursor(img);
+				op=15;
 			} else if (x > 76 && x < 262 && y > 156 && y < 194) {
 				c = 3;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 0;
+				op=255;
 			}
 			break;
 		case 1:
 			if (x > 223 && x < 387 && y > 84 && y < 131) {
 				c = 5;
-				app.cursor(img);
+				op=15;
 			} else if (x > 271 && x < 346 && y > 131 && y < 174) {
 				c = 6;
-				app.cursor(img);
+				op=15;
 			} else if (x > 446 && x < 564 && y > 134 && y < 186) {
 				c = 7;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 4;
+				op=255;
 
 			}
 			break;
 		case 2:
 			if (x > 403 && x < 534 && y > 76 && y < 113) {
 				c = 9;
-				app.cursor(img);
+				op=15;
 			} else if (x > 404 && x < 504 && y > 131 && y < 173) {
 				c = 10;
-				app.cursor(img);
+				op=15;
 			} else if (x > 646 && x < 784 && y > 126 && y < 166) {
 				c = 11;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 8;
+				op=255;
 			}
 			break;
 		case 3:
 			if (x > 508 && x < 627 && y > 76 && y < 119) {
 				c = 13;
-				app.cursor(img);
+				op=15;
 			} else if (x > 514 && x < 656 && y > 142 && y < 179) {
 				c = 14;
-				app.cursor(img);
+				op=15;
 			} else if (x > 756 && x < 921 && y > 144 && y < 182) {
 				c = 15;
-				app.cursor(img);
+				op=15;
 			} else {
 				c = 12;
+				op=255;
 			}
 			break;
 		case 4:
@@ -125,6 +129,7 @@ public class DialogoRace extends Dialogo {
 				c = 18;
 			} else {
 				c = 16;
+				op=255;
 			}
 			break;
 
