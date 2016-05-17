@@ -13,20 +13,39 @@ public class DialogoRace extends Dialogo {
 		app.imageMode(app.CENTER);
 		switch (burbuja) {
 		case 0:
+			animar();
 			app.tint(255, o);
 			app.image(p[c], x, y);
+			app.noTint();
+
 			break;
 		case 1:
+			animar();
+			app.tint(255, o);
 			app.image(p[c], x + 200, y);
+			app.noTint();
+
 			break;
 		case 2:
+			animar();
+			app.tint(255, o);
 			app.image(p[c], x + 380, y);
+			app.noTint();
+
 			break;
 		case 3:
+			animar();
+			app.tint(255, o);
 			app.image(p[c], x + 500, y);
+			app.noTint();
+
 			break;
 		case 4:
+			animar();
+			app.tint(255, o);
 			app.image(p[c], x + 580, y);
+			app.noTint();
+
 			break;
 		case 5:
 			break;
@@ -36,8 +55,7 @@ public class DialogoRace extends Dialogo {
 
 	@Override
 	public void animar() {
-		// TODO Auto-generated method stub
-
+		o += 5;
 	}
 
 	@Override

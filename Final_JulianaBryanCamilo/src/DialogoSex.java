@@ -6,7 +6,6 @@ public class DialogoSex extends Dialogo {
 	public DialogoSex(PApplet app, int x, int y, PImage[] p) {
 		super(app, x, y, p);
 		burbuja = 2;
-
 	}
 
 	@Override
@@ -35,7 +34,6 @@ public class DialogoSex extends Dialogo {
 	@Override
 	public void animar() {
 		o += 5;
-
 	}
 
 	@Override
