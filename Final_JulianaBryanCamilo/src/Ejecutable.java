@@ -19,7 +19,7 @@ public class Ejecutable extends PApplet {
 	}
 
 	public void mousePressed() {
-		System.out.println(mouseX + "y" + mouseY);
+		
 		log.mouse(mouseX, mouseY);
 	}
 

@@ -17,7 +17,7 @@ public class Logica {
 	private Capture cam;
 	private PFont font;
 
-	private PImage[] imgs = new PImage[21];
+	private PImage[] imgs = new PImage[23];
 
 	private PImage[] choices = new PImage[6];
 	private PImage camarita;
@@ -76,7 +76,9 @@ public class Logica {
 			cam.read();
 		}
 		camarita = cam.get();*/
+		app.cursor(imgs[21]);
 		switch (pantalla) {
+		
 		case 0: // incio
 			// img
 			app.image(imgs[20], 0, 0);			
@@ -103,19 +105,19 @@ public class Logica {
 			// sexualidad
 			app.image(imgs[14], 0, 0);
 			dialogos.get(0).pintar();
-			dialogos.get(0).hover(app.mouseX, app.mouseY);
+			dialogos.get(0).hover(app.mouseX, app.mouseY, imgs[22]);
 			break;
 		case 4:
 			// raza
 			app.image(imgs[1], 0, 0);
 			dialogos.get(1).pintar();
-			dialogos.get(1).hover(app.mouseX, app.mouseY);
+			dialogos.get(1).hover(app.mouseX, app.mouseY, imgs[22]);
 			break;
 		case 5:
 			// estratos
 			app.image(imgs[0], 0, 0);
 			dialogos.get(2).pintar();
-			dialogos.get(2).hover(app.mouseX, app.mouseY);
+			dialogos.get(2).hover(app.mouseX, app.mouseY, imgs[22]);
 			break;
 		case 6: // preguntsd
 			preguntas();
@@ -125,6 +127,8 @@ public class Logica {
 			app.image(imgs[5], 0, 0);
 			app.textFont(font);
 			app.text(variable, 530, 450);
+			jugador.pintar(choices);
+			jugador.setXandY(200,350);
 			break;
 		case 10:
 			//fiesta();

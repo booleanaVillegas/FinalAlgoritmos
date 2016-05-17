@@ -20,6 +20,8 @@ public class Ppal {
 		app.image(per[personaje], x, y);
 	}
 
+
+
 	public void mover() {
 
 	}
@@ -38,4 +40,9 @@ public class Ppal {
 			}
 		}
 	}
+	public void setXandY(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
 }

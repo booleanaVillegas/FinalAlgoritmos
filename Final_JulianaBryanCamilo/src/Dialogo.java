@@ -20,7 +20,7 @@ public abstract class Dialogo extends Thread {
 
 	public abstract void animar();
 	public abstract void press(int x, int y);
- public abstract void hover(int x, int y);
+ public abstract void hover(int x, int y, PImage img);
  
 	public void run() {
 		while (true) {
