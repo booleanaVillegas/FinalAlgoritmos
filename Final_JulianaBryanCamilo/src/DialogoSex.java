@@ -5,8 +5,8 @@ public class DialogoSex extends Dialogo {
 
 	public DialogoSex(PApplet app, int x, int y, PImage[] p) {
 		super(app, x, y, p);
-		burbuja=2;
-		
+		burbuja = 2;
+
 	}
 
 	@Override
@@ -14,10 +14,17 @@ public class DialogoSex extends Dialogo {
 		app.imageMode(app.CENTER);
 		switch (burbuja) {
 		case 0:
+			animar();
+			app.tint(255, o);
 			app.image(p[c], x, y);
+			app.noTint();
+
 			break;
 		case 1:
-			app.image(p[c], x+50, y-30);
+			animar();
+			app.tint(255, o);
+			app.image(p[c], x + 50, y - 30);
+			app.noTint();
 			break;
 		case 2:
 			break;
@@ -27,7 +34,7 @@ public class DialogoSex extends Dialogo {
 
 	@Override
 	public void animar() {
-		// TODO Auto-generated method stub
+		o += 5;
 
 	}
 
@@ -38,39 +45,35 @@ public class DialogoSex extends Dialogo {
 			if (x > 314 && x < 497 && y > 234 && y < 273) {
 				c = 1;
 				app.cursor(img);
-			}
-			else if (x > 407 && x < 513 && y > 302 && y < 336) {
+			} else if (x > 407 && x < 513 && y > 302 && y < 336) {
 				c = 2;
 				app.cursor(img);
-			}else{
+			} else {
 				c = 0;
 			}
 			break;
 		case 1:
-			if (x > 247 && x < 401 && y > 95 && y <150) {
+			if (x > 247 && x < 401 && y > 95 && y < 150) {
 				c = 4;
 				app.cursor(img);
-			}
-			else if (x > 228 && x < 421 && y > 173 && y < 206) {
+			} else if (x > 228 && x < 421 && y > 173 && y < 206) {
 				c = 5;
 				app.cursor(img);
-			}
-			else if (x >547 && x < 803 && y > 176 && y <216) {
+			} else if (x > 547 && x < 803 && y > 176 && y < 216) {
 				c = 6;
 				app.cursor(img);
-			}
-			else if (x > 636 && x < 736 && y >238 && y < 266) {
+			} else if (x > 636 && x < 736 && y > 238 && y < 266) {
 				c = 7;
 				app.cursor(img);
-			}
-			else if (x > 481 && x <730 && y > 332 && y < 356) {
+			} else if (x > 481 && x < 730 && y > 332 && y < 356) {
 				c = 8;
 				app.cursor(img);
-			}else{
+			} else {
 				c = 3;
 			}
-			break;}
-		
+			break;
+		}
+
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class DialogoSex extends Dialogo {
 		}
 		if (x > 803 && x < 1048 && y > 395 && y < 681) {
 			burbuja = 1;
-		}	
+		}
 	}
 
 }
